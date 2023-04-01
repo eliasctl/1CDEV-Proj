@@ -13,27 +13,34 @@
 // 4 Orange "\033[33m"
 // Reset "\033[0m"
 
-// tableau [Chaque ligne = [ chaque case = [valeur -1=X 0=Vide nb=nb, je suis ici, couleur 0=rien 1=bleu 2=rouge 3=vert 4=orange, nb tour]]]
+// tableau [Chaque ligne = [ chaque case = [valeur -1=vide 0=X nb=nb, je suis ici, couleur 0=rien 1=bleu 2=rouge 3=vert 4=orange, nb tour]]]
+// Pourquoi tu fonctionne pas ??
+// réponse de toi même : parce que tu as oublié de mettre un point virgule à la fin de ta ligne
+// moi : non il y en a un
+// réponse de toi même : non il y en a pas
+// moi : a quelle ligne?
+// réponse de toi même : à la ligne 42
 
 int ***niveau0() {
-    int ***tableau = malloc(2 * sizeof(int **));
-    for (int i = 0; i < 2; i++){
+    int ***tableau = malloc(1 * sizeof(int **));
+    for (int i = 0; i < 1; i++){
         tableau[i] = malloc(4 * sizeof(int *));
         for (int j = 0; j < 4; j++){
             tableau[i][j] = malloc(4 * sizeof(int));
         }
     }
-    for (int i = 0; i < 2; i++){
+    for (int i = 0; i < 1; i++){
         for (int j = 0; j < 4; j++){
-            for (int k = 0; k < 4; k++){
-                tableau[i][j][k] = 0;
-            }
+            tableau[i][j][0] = 1;
+            tableau[i][j][1] = 0;
+            tableau[i][j][2] = 0;
+            tableau[i][j][3] = 0;
         }
     }
-    tableau[0][0][0] = -1;
-    tableau[0][1][2] = 2;
-    //tableau[0][1][1] = 1;
-    tableau[0][2][1] = 1;
+    tableau[0][0][0] = 0;
+    tableau[0][0][1] = 1;
+    tableau[0][0][2] = 1;
+    tableau[0][0][3] = 1;
     return tableau;
 }
 
@@ -44,7 +51,7 @@ int ***choixDuNiveau(int *abscisses , int *ordonnees , int ***tableau , int *cho
     switch(choix){
         case 0:
             tableau = niveau0();
-            *abscisses = 2;
+            *abscisses = 1;
             *ordonnees = 4;
             *choixNiveauCorrect = 1;
             return tableau;
@@ -158,6 +165,8 @@ int deplacementPossible(char depacement, int ***tableau , int abscisses , int or
             for (int i = 0; i < abscisses; i++){
                 for (int j = 0; j < ordonnees; j++){
                     if (tableau[i][j][1] == 1){
+                        // je m'arrête là pour ce soir bisou bonne nuit
+                        printf("%d , %d", ordonnees - 1 , j);
                         if (j < ordonnees - 1){
                             if (tableau[i][j+1][0] == 0){
                                 retour = 1;
@@ -167,6 +176,47 @@ int deplacementPossible(char depacement, int ***tableau , int abscisses , int or
                 }
             }
             break;
+    }
+    return retour;
+}
+
+void dernierePositionCouleur(int ***tableau , int abscisses , int ordonnees , int couleur) {
+    int nbCoups = 0;
+    int coordonnees[2];
+    for (int i = 0; i < abscisses; i++){
+        for (int j = 0; j < ordonnees; j++){
+            if (tableau[i][j][2] == couleur && tableau[i][j][3] > nbCoups){
+                nbCoups = tableau[i][j][3];
+                coordonnees[0] = i;
+                coordonnees[1] = j;
+            }
+        }
+    }
+    tableau[coordonnees[0]][coordonnees[1]][1] = 1;
+}
+
+int couleurEstPresente(int ***tableau , int abscisses , int ordonnees , int couleur) {
+    int retour = 0;
+    for (int i = 0; i < abscisses; i++){
+        for (int j = 0; j < ordonnees; j++){
+            if (tableau[i][j][2] == couleur){
+                retour = 1;
+            }
+        }
+    }
+    return retour;
+}
+
+int partieEstFinie(int ***tableau , int abscisses , int ordonnees) {
+    int retour = 1;
+    for (int i = 0; i < abscisses; i++){
+        for (int j = 0; j < ordonnees; j++){
+            if (tableau[i][j][0] < 0){
+                if (tableau[i][j][2] == 0){
+                    retour = 0;
+                }
+            }
+        }
     }
     return retour;
 }
@@ -268,45 +318,77 @@ void queFaire(int ***tableau , int abscisses , int ordonnees , int *partieFinie)
                     printf("Vous ne pouvez pas annuler ce coup \n");
                     choixValide = 0;
                 } else {
+                    int couleur = tableau[positionActuelle[0]][positionActuelle[1]][2];
                     tableau[positionActuelle[0]][positionActuelle[1]][1] = 0;
                     tableau[positionActuelle[0]][positionActuelle[1]][2] = 0;
                     tableau[positionActuelle[0]][positionActuelle[1]][3] = 0;
+                    dernierePositionCouleur(tableau, abscisses, ordonnees, couleur);
                 }
                 break;
             case 'E':
                 printf("Vous avez choisi d'effacer la chaine \n");
-                // le faire plus tard
-                break;
-            case 'B':
-                printf("Vous avez choisi de changer de couleur pour bleu \n");
-                tableau[positionActuelle[0]][positionActuelle[1]][1] = 0;
-                int dernierePositionCouleur[3]; // de la forme [nombre de coup, abscisses, ordonnees]
-                dernierePositionCouleur[0] = 0;
-                int couleurTrouve = 0;
-                
-                for (int i = 0; i<abscisses; i++){
-                    for (int j = 0; j<ordonnees; j++) {
-                        if (tableau[i][j][2] == 1) {
-                            if (tableau[i][j][3] > dernierePositionCouleur[0]){
-                                // Je me suis arrêté ici
+                if (tableau[positionActuelle[0]][positionActuelle[1]][3] == 1){
+                    printf("Cette chaine est déjà vide \n");
+                    choixValide = 0;
+                } else {
+                    int couleur = tableau[positionActuelle[0]][positionActuelle[1]][2];
+                    for (int i = 0; i < abscisses; i++){
+                        for (int j = 0; j < ordonnees; j++){
+                            if (tableau[i][j][3] != 1){
+                                if (tableau[i][j][2] == couleur){
+                                    tableau[i][j][1] = 0;
+                                    tableau[i][j][2] = 0;
+                                    tableau[i][j][3] = 0;
+                                }
                             }
                         }
                     }
+                }
+                break;
+            case 'B':
+                printf("Vous avez choisi de changer de couleur pour bleu \n");
+                if (couleurEstPresente(tableau, abscisses, ordonnees, 1) != 1){
+                    printf("La couleur n'est pas présente \n");
+                    choixValide =0;
+                } else {
+                    tableau[positionActuelle[0]][positionActuelle[1]][1] = 0;
+                    dernierePositionCouleur(tableau, abscisses, ordonnees, 1);
                 }
 
                 break;
             case 'R':
                 printf("Vous avez choisi de changer de couleur pour rouge \n");
+                if (couleurEstPresente(tableau, abscisses, ordonnees, 2) != 1){
+                    printf("La couleur rouge n'est pas présente \n");
+                    choixValide = 0;
+                } else {
+                    tableau[positionActuelle[0]][positionActuelle[1]][1] = 0;
+                    dernierePositionCouleur(tableau, abscisses, ordonnees, 2);
+                }
                 break;
             case 'V':
                 printf("Vous avez choisi de changer de couleur pour vert \n");
+                if (couleurEstPresente(tableau, abscisses, ordonnees, 3) != 1){
+                    printf("La couleur verte n'est pas présente \n");
+                    choixValide = 0;
+                } else {
+                    tableau[positionActuelle[0]][positionActuelle[1]][1] = 0;
+                    dernierePositionCouleur(tableau, abscisses, ordonnees, 3);
+                }
                 break;
             case 'O':
                 printf("Vous avez choisi de changer de couleur pour orange \n");
+                if (couleurEstPresente(tableau, abscisses, ordonnees, 4) != 1){
+                    printf("La couleur orange n'est pas présente \n");
+                    choixValide = 0;
+                } else {
+                    tableau[positionActuelle[0]][positionActuelle[1]][1] = 0;
+                    dernierePositionCouleur(tableau, abscisses, ordonnees, 4);
+                }
                 break;
             case 'P':
-                printf("Vous avez choisi de quitter \n");
-                *partieFinie = 1;
+                printf("Vous avez choisi de quitter le niveau \n");
+                *partieFinie = 2;
                 break;
             default:
                 printf("Choix invalide \n");
@@ -321,7 +403,7 @@ int main() {
     int abscisses;
     int ordonnees;
     int choixNiveauCorrect = 0;
-    int partieFinie = 0;
+    int partieFinie = 0; // partie fini  0=non 1=gagnée 2=quité
     while (choixNiveauCorrect == 0){
         tableau = choixDuNiveau(&abscisses , &ordonnees , tableau , &choixNiveauCorrect);
     }
@@ -334,3 +416,5 @@ int main() {
 
     return 0;
 }
+
+// max booblil | prète moi ta meuf
