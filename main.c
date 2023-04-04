@@ -21,15 +21,92 @@ int ***choixDuNiveau(int *abscisses , int *ordonnees , int ***tableau , int *cho
     printf("Vous avez choisi le niveau %d \n", choix);
     switch(choix){
         case 0:
-            tableau = niveau0(1, 4);
+            tableau = niveau0();
             *abscisses = 1;
             *ordonnees = 4;
             *choixNiveauCorrect = 1;
             return tableau;
             break;
         case 1:
-            tableau = niveau1(3, 3);
+            tableau = niveau1();
             *abscisses = 3;
+            *ordonnees = 3;
+            *choixNiveauCorrect = 1;
+            return tableau;
+            break;
+        case 2:
+            tableau = niveau2();
+            *abscisses = 3;
+            *ordonnees = 3;
+            *choixNiveauCorrect = 1;
+            return tableau;
+            break;
+        case 3:
+            tableau = niveau3();
+            *abscisses = 5;
+            *ordonnees = 5;
+            *choixNiveauCorrect = 1;
+            return tableau;
+            break;
+        case 4:
+            tableau = niveau4();
+            *abscisses = 4;
+            *ordonnees = 3;
+            *choixNiveauCorrect = 1;
+            return tableau;
+            break;
+        case 5:
+            tableau = niveau5();
+            *abscisses = 5;
+            *ordonnees = 5;
+            *choixNiveauCorrect = 1;
+            return tableau;
+            break;
+        case 6:
+            tableau = niveau6();
+            *abscisses = 2;
+            *ordonnees = 2;
+            *choixNiveauCorrect = 1;
+            return tableau;
+            break;
+        case 7:
+            tableau = niveau7();
+            *abscisses = 3;
+            *ordonnees = 2;
+            *choixNiveauCorrect = 1;
+            return tableau;
+            break;
+        case 8:
+            tableau = niveau8();
+            *abscisses = 4;
+            *ordonnees = 2;
+            *choixNiveauCorrect = 1;
+            return tableau;
+            break;
+        case 9:
+            tableau = niveau9();
+            *abscisses = 3;
+            *ordonnees = 3;
+            *choixNiveauCorrect = 1;
+            return tableau;
+            break;
+        case 10:
+            tableau = niveau10();
+            *abscisses = 4;
+            *ordonnees = 3;
+            *choixNiveauCorrect = 1;
+            return tableau;
+            break;
+        case 11:
+            tableau = niveau11();
+            *abscisses = 4;
+            *ordonnees = 3;
+            *choixNiveauCorrect = 1;
+            return tableau;
+            break;
+        case 12:
+            tableau = niveau12();
+            *abscisses = 4;
             *ordonnees = 3;
             *choixNiveauCorrect = 1;
             return tableau;
@@ -382,6 +459,19 @@ void queFaire(int ***tableau , int abscisses , int ordonnees , int *partieFinie)
                 break;
         }
     }
+}
+
+void explicationDuJeu(){
+    system("clear");
+    printf("Le but du jeu est de relier remplir de couleur le plateur \n");
+    printf("Pour cela vous vous déplacez sur le plateau avec une couleur et chaque case prends la couleur que vous avez. \n");
+    printf("Vous pouvez déplacer sur une case de la même valeur que la votre ou une valeur plus grande que la votre. \n");
+    printf("Vous ne pouvez pas repasser par une case. \n");
+    printf("Vous pouvez vous déplacer avec les touches Z Q S D \n");
+    printf("Vous pouvez annuler le dernier coup en appuyant sur A \n");
+    printf("Vous pouvez effacer une chaine de pions en appuyant sur E \n");
+    printf("Vous pouvez changer de couleur en appuyant sur B pour bleu, R pour rouge, V pour vert, O pour orange \n");
+    printf("Vous pouvez quitter le niveau en appuyant sur P \n");
 }
 
 int main() {

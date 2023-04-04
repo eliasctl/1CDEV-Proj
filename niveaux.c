@@ -17,16 +17,14 @@ int*** creerTableau(int abscisse, int ordonnee) {
     return tableau;
 }
 
-int ***niveau0(int abscisse, int ordonnee) {
-    int*** tableau = creerTableau(abscisse, ordonnee);
+int ***niveau0() {
+    int*** tableau = creerTableau(1, 4);
     tableau[0][0][0] = 0;
     tableau[0][0][1] = 1;
     tableau[0][0][2] = 1;
     tableau[0][0][3] = 1;
     return tableau;
 }
-
-
 
 int ***niveau1() {
     int ***tableau = creerTableau(3, 3);
@@ -40,6 +38,180 @@ int ***niveau1() {
     tableau[0][1][0] = -1;
     tableau[2][1][0] = -1;
     tableau[2][2][0] = -1;
-    printf("Il n'y a pas eu de pb avec le niveau 1");
+    return tableau;
+}
+
+int ***niveau2() {
+    int ***tableau = creerTableau(3, 3);
+    // Case de départ
+    tableau[2][2][0] = 0;
+    tableau[2][2][1] = 1;
+    tableau[2][2][2] = 1;
+    tableau[2][2][3] = 1;
+    // Cases Vides
+    tableau[1][1][0] = -1;
+    tableau[2][1][0] = -1;
+    return tableau;
+}
+
+int ***niveau3() {
+    int ***tableau = creerTableau(5, 5);
+    // Case de départ
+    tableau[2][2][0] = 0;
+    tableau[2][2][1] = 1;
+    tableau[2][2][2] = 1;
+    tableau[2][2][3] = 1;
+    // Cases Vides
+    tableau[1][1][0] = -1;
+    tableau[1][2][0] = -1;
+    tableau[1][3][0] = -1;
+    tableau[1][4][0] = -1;
+    tableau[2][1][0] = -1;
+    tableau[3][1][0] = -1;
+    tableau[3][2][0] = -1;
+    tableau[3][3][0] = -1;
+    return tableau;
+}
+
+int ***niveau4() {
+    int ***tableau = creerTableau(4, 3);
+    // Case de départ
+    tableau[1][1][0] = 0;
+    tableau[1][1][1] = 1;
+    tableau[1][1][2] = 1;
+    tableau[1][1][3] = 1;
+    // Cases Vides
+    tableau[2][1][0] = -1;
+    tableau[2][2][0] = -1;
+    return tableau;
+}
+
+int ***niveau5() {
+    int ***tableau = creerTableau(5, 5);
+    // Case de départ
+    tableau[2][2][0] = 0;
+    tableau[2][2][1] = 1;
+    tableau[2][2][2] = 1;
+    tableau[2][2][3] = 1;
+    // Cases Vides
+    tableau[0][4][0] = -1;
+    tableau[1][1][0] = -1;
+    tableau[1][2][0] = -1;
+    tableau[2][1][0] = -1;
+    tableau[2][4][0] = -1;
+    tableau[3][1][0] = -1;
+    tableau[3][2][0] = -1;
+    tableau[3][4][0] = -1;
+    tableau[4][4][0] = -1;
+    return tableau;
+}
+
+int ***niveau6() {
+    int ***tableau = creerTableau(2, 2);
+    // Case de départ
+    tableau[1][0][0] = 0;
+    tableau[1][0][1] = 1;
+    tableau[1][0][2] = 1;
+    tableau[1][0][3] = 1;
+    // Cases Vides
+    // Case Valeur
+    tableau[1][1][0] = 2;
+    return tableau;
+
+}
+
+int ***niveau7() {
+    int ***tableau = creerTableau(3, 2);
+    // Case de départ
+    tableau[1][1][0] = 0;
+    tableau[1][1][1] = 1;
+    tableau[1][1][2] = 1;
+    tableau[1][1][3] = 1;
+    // Cases Vides
+    // Case Valeur
+    tableau[2][1][0] = 2;
+    return tableau;
+}
+
+int ***niveau8() {
+    int ***tableau = creerTableau(4, 2);
+    // Case de départ
+    tableau[3][0][0] = 0;
+    tableau[3][0][1] = 1;
+    tableau[3][0][2] = 1;
+    tableau[3][0][3] = 1;
+    // Cases Vides
+    tableau[0][1][0] = -1;
+    tableau[3][1][0] = -1;
+    // Case Valeur
+    tableau[0][0][0] = 2;
+    return tableau;
+}
+
+int ***niveau9() {
+    int ***tableau = creerTableau(3, 3);
+    // Case de départ
+    tableau[1][1][0] = 0;
+    tableau[1][1][1] = 1;
+    tableau[1][1][2] = 1;
+    tableau[1][1][3] = 1;
+    // Cases Vides
+    // Case Valeur
+    tableau[0][0][0] = 2;
+    tableau[1][0][0] = 2;
+    return tableau;
+}
+
+int ***niveau10() {
+    int ***tableau = creerTableau(4, 4);
+    // Case de départ
+    tableau[1][1][0] = 0;
+    tableau[1][1][1] = 1;
+    tableau[1][1][2] = 1;
+    tableau[1][1][3] = 1;
+    // Cases Vides
+    tableau[2][1][0] = -1;
+    // Case Valeur
+    tableau[0][2][0] = 3;
+    tableau[1][2][0] = 2;
+    return tableau;
+}
+
+int ***niveau11() {
+    int ***tableau = creerTableau(4, 3);
+    // Case de départ
+    tableau[0][2][0] = 0;
+    tableau[0][2][1] = 1;
+    tableau[0][2][2] = 1;
+    tableau[0][2][3] = 1;
+    // Cases Vides
+    tableau[0][0][0] = -1;
+    tableau[0][1][0] = -1;
+    // Case Valeur
+    tableau[3][0][0] = 2;
+    tableau[3][1][0] = 2;
+    tableau[3][2][0] = 3;
+    return tableau;
+}
+
+int ***niveau12() {
+    int ***tableau = creerTableau(4, 3);
+    // Case de départ
+    tableau[0][2][0] = 0;
+    tableau[0][2][1] = 1;
+    tableau[0][2][2] = 1;
+    tableau[0][2][3] = 1;
+    // Cases Vides
+    tableau[0][1][0] = -1;
+    // Case Valeur
+    tableau[0][0][0] = 3;
+    tableau[1][0][0] = 3;
+    tableau[2][0][0] = 3;
+    tableau[3][0][0] = 3;
+    tableau[1][1][0] = 2;
+    tableau[2][1][0] = 2;
+    tableau[3][1][0] = 2;
+    tableau[2][2][0] = 2;
+    tableau[3][2][0] = 2;
     return tableau;
 }
