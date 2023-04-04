@@ -215,3 +215,92 @@ int ***niveau12() {
     tableau[3][2][0] = 2;
     return tableau;
 }
+
+int ***niveau13() {
+    int ***tableau = creerTableau(4, 4);
+    // Case de départ
+    tableau[3][0][0] = 0;
+    tableau[3][0][1] = 1;
+    tableau[3][0][2] = 1;
+    tableau[3][0][3] = 1;
+    // Cases Vides
+    tableau[0][0][0] = -1;
+    tableau[0][1][0] = -1;
+    tableau[0][2][0] = -1;
+    tableau[1][0][0] = -1;
+    tableau[2][0][0] = -1;
+    // Case Valeur
+    tableau[0][3][0] = 5;
+    tableau[1][1][0] = 2;
+    tableau[1][2][0] = 2;
+    tableau[1][3][0] = 4;
+    tableau[2][1][0] = 2;
+    tableau[2][2][0] = 2;
+    tableau[2][3][0] = 3;
+    tableau[3][2][0] = 2;
+    tableau[3][3][0] = 2;
+    return tableau;
+}
+
+int ***niveau14() {
+    int ***tableau = creerTableau(5, 5);
+    // Case de départ
+    tableau[2][1][0] = 0;
+    tableau[2][1][1] = 1;
+    tableau[2][1][2] = 1;
+    tableau[2][1][3] = 1;
+    // Cases Vides
+    tableau[1][1][0] = -1;
+    tableau[3][1][0] = -1;
+    // Case Valeur
+    tableau[0][3][0] = 3;
+    tableau[0][4][0] = 4;
+    tableau[1][3][0] = 3;
+    tableau[1][4][0] = 5;
+    tableau[2][3][0] = 3;
+    tableau[2][4][0] = 3;
+    tableau[3][4][0] = 3;
+    tableau[4][3][0] = 2;
+    tableau[4][4][0] = 2;
+    return tableau;
+}
+
+int ***niveau15() {
+    int ***tableau = creerTableau(5, 6);
+    // Case de départ
+    tableau[1][5][0] = 0;
+    tableau[1][5][1] = 1;
+    tableau[1][5][2] = 1;
+    tableau[1][5][3] = 1;
+    // Cases Vides
+    tableau[0][0][0] = -1;
+    tableau[0][5][0] = -1;
+    tableau[2][0][0] = -1;
+    tableau[2][4][0] = -1;
+    tableau[2][5][0] = -1;
+    tableau[3][0][0] = -1;
+    tableau[3][2][0] = -1;
+    tableau[3][4][0] = -1;
+    tableau[3][5][0] = -1;
+    tableau[4][0][0] = -1;
+    tableau[4][4][0] = -1;
+    tableau[4][5][0] = -1;
+    // Case Valeur
+    tableau[0][1][0] = 7;
+    tableau[0][2][0] = 6;
+    tableau[0][3][0] = 3;
+    tableau[0][4][0] = 2;
+    tableau[1][0][0] = 9;
+    tableau[1][1][0] = 8;
+    tableau[1][2][0] = 5;
+    tableau[1][3][0] = 4;
+    tableau[2][1][0] = 4;
+    tableau[2][2][0] = 4;
+    tableau[2][3][0] = 4;
+    tableau[3][1][0] = 4;
+    tableau[3][3][0] = 4;
+    tableau[4][1][0] = 4;
+    tableau[4][2][0] = 4;
+    tableau[4][3][0] = 4;
+    return tableau;
+}
