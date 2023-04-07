@@ -14,11 +14,16 @@
 
 // tableau [Chaque ligne = [ chaque case = [valeur -1=vide 0=X nb=nb, je suis ici, couleur 0=rien 1=bleu 2=rouge 3=vert 4=orange, nb tour]]]
 
-int ***choixDuNiveau(int *abscisses , int *ordonnees , int ***tableau , int *choixNiveauCorrect) {
+int ***choixDuNiveau(int *abscisses , int *ordonnees , int ***tableau , int *choixNiveauCorrect, int *niveau) {
     int choix;
-    printf("Choisissez le niveau entre 0 facile et 30 dificile : \n");
-    scanf("%d", &choix);
-    printf("Vous avez choisi le niveau %d \n", choix);
+    if (*niveau == -1){
+        printf("Choisissez le niveau entre 0 facile et 30 dificile : \n");
+        scanf("%d", &choix);
+        printf("Vous avez choisi le niveau %d \n", choix);
+        *niveau = choix;
+    } else {
+        choix = *niveau;
+    }
     switch(choix){
         case 0:
             tableau = niveau0();
@@ -149,6 +154,7 @@ int ***choixDuNiveau(int *abscisses , int *ordonnees , int ***tableau , int *cho
         default:
             printf("Choix invalide \n");
             *choixNiveauCorrect = 0;
+            *niveau = -1;
             return 0;
             break;
     }
@@ -311,12 +317,12 @@ int partieEstFinie(int ***tableau , int abscisses , int ordonnees, int *partieFi
     return retour;
 }
 
-void queFaire(int ***tableau , int abscisses , int ordonnees , int *partieFinie) {
+void queFaire(int ***tableau , int abscisses , int ordonnees , int *partieFinie , int niveau) {
     int positionActuelle[2];
     for (int i = 0; i < abscisses; i++){
         for (int j = 0; j < ordonnees; j++){
             if (tableau[i][j][1] == 1){
-                printf("--- Ligne : %d, Colonne : %d, Couleur : ", i , j);
+                printf("--- Niveau : %d, Ligne : %d, Colonne : %d, Couleur : ", niveau,  i , j);
                 switch (tableau[i][j][2])
                 {
                     case 1:
@@ -507,7 +513,63 @@ void explicationDuJeu(){
     printf("Vous pouvez annuler le dernier coup en appuyant sur A \n");
     printf("Vous pouvez effacer une chaine de pions en appuyant sur E \n");
     printf("Vous pouvez changer de couleur en appuyant sur B pour bleu, R pour rouge, V pour vert, O pour orange \n");
-    printf("Vous pouvez quitter le niveau en appuyant sur P \n");
+    printf("Vous pouvez choisir de commencer à partir du niveau que vous souhaitez 0 étant le premier niveau et 30 le dernier \n");
+    printf("Appuyez sur [entrer] pour continuer ! \n");
+}
+
+int choixApresPartie(){
+    int choix;
+    int choixValide = 0;
+    while (choixValide == 0){
+        printf("Voulez vous recommencer le niveau ? (1) \n");
+        printf("Voulez-vous aller au niveau suivant ? (2) \n");
+        printf("Voulez-vous choisir un autre niveau ? (3) \n");
+        printf("Voulez-vous quittez le jeu ? (4) \n");
+        scanf("%d", &choix);
+        switch (choix)
+        {
+            case 1:
+                printf("Vous avez choisi de recommencer le niveau \n");
+                choixValide = 1;
+                break;
+            case 2:
+                printf("Vous avez choisi d'aller au niveau suivant \n");
+                choixValide = 1;
+                break;
+            case 3:
+                printf("Vous avez choisi de choisir un autre niveau \n");
+                choixValide = 1;
+                break;
+            case 4:
+                printf("Vous avez choisi de quitter le jeu \n");
+                choixValide = 1;
+                break;
+            default:
+                printf("Choix invalide \n");
+                choixValide = 0;
+                break;
+        }
+    }
+    return choix;
+}
+
+int effacerTableau(int ***tableau, int abscisses, int ordonnees){
+    for (int i = 0; i < abscisses; i++){
+        for (int j = 0; j < ordonnees; j++){
+            free(tableau[i][j]);
+        }
+        free(tableau[i]);
+    }
+    return 0;
+}
+
+int effacerPositionActuelle(int ***tableau, int abscisses, int ordonnees){
+    for (int i = 0; i < abscisses; i++){
+        for (int j = 0; j < ordonnees; j++){
+            tableau[i][j][1] = 0;
+        }
+    }
+    return 0;
 }
 
 int main() {
@@ -516,30 +578,77 @@ int main() {
     int ***tableau;
     int abscisses;
     int ordonnees;
+    int niveau = -1;
     int choixNiveauCorrect = 0;
     int partieFinie = 0; // partie fini  0=non 1=gagnée 2=quité
+    int jeuFini = 0; // jeu fini 0=non 1=oui
+    int valeurChoixApresPartie = 0;
     while (choixNiveauCorrect == 0){
-        tableau = choixDuNiveau(&abscisses , &ordonnees , tableau , &choixNiveauCorrect);
-    }
-    
-    while (partieFinie == 0){
+        explicationDuJeu();
+        getchar();
         system("clear");
-        affichage(tableau, abscisses, ordonnees);
-        queFaire(tableau, abscisses, ordonnees, &partieFinie);
-        if (partieFinie == 0){
-            partieEstFinie(tableau, abscisses, ordonnees, &partieFinie);
+        tableau = choixDuNiveau(&abscisses , &ordonnees , tableau , &choixNiveauCorrect, &niveau);
+    }
+
+    while (jeuFini == 0)
+    {
+        while (partieFinie == 0){
+            system("clear");
+            affichage(tableau, abscisses, ordonnees);
+            queFaire(tableau, abscisses, ordonnees, &partieFinie, niveau);
+            if (partieFinie == 0){
+                partieEstFinie(tableau, abscisses, ordonnees, &partieFinie);
+            }
         }
-        printf("%d \n", partieFinie);
-    }
-    system("clear");
+        effacerPositionActuelle(tableau, abscisses, ordonnees);
+        system("clear");
 
-    if (partieFinie == 1){
-        affichage(tableau, abscisses, ordonnees);
-        printf("Bravo vous avez gagné 🎉 \n");
-    } else {
-        printf("Vous avez quité le niveau \n");
+        if (partieFinie == 1){
+            affichage(tableau, abscisses, ordonnees);
+            printf("Bravo vous avez gagné au niveau %d 🎉\n", niveau);
+            effacerTableau(tableau, abscisses, ordonnees);
+            valeurChoixApresPartie =  choixApresPartie();
+            switch (valeurChoixApresPartie)
+            {
+            case 1:
+                tableau = choixDuNiveau(&abscisses , &ordonnees , tableau , &choixNiveauCorrect, &niveau);
+                break;
+            case 2:
+                niveau++;
+                tableau = choixDuNiveau(&abscisses , &ordonnees , tableau , &choixNiveauCorrect, &niveau);
+                break;
+            case 3:
+                niveau = -1;
+                tableau = choixDuNiveau(&abscisses , &ordonnees , tableau , &choixNiveauCorrect, &niveau);
+                break;
+            case 4:
+                jeuFini = 1;
+                break;
+            }
+        } else {
+            printf("Vous avez quité le niveau %d\n", niveau);
+            effacerTableau(tableau, abscisses, ordonnees);
+            valeurChoixApresPartie =  choixApresPartie();
+            switch (valeurChoixApresPartie)
+            {
+            case 1:
+                tableau = choixDuNiveau(&abscisses , &ordonnees , tableau , &choixNiveauCorrect, &niveau);
+                break;
+            case 2:
+                niveau++;
+                tableau = choixDuNiveau(&abscisses , &ordonnees , tableau , &choixNiveauCorrect, &niveau);
+                break;
+            case 3:
+                niveau = -1;
+                tableau = choixDuNiveau(&abscisses , &ordonnees , tableau , &choixNiveauCorrect, &niveau);
+                break;
+            case 4:
+                jeuFini = 1;
+                break;
+            }
+        }
+        partieFinie = 0;
     }
-
     return 0;
 }
 

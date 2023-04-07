@@ -305,7 +305,6 @@ int ***niveau15() {
     return tableau;
 }
 
-
 int ***niveau16() {
     int ***tableau = creerTableau(6, 6);
     // Case de départ
@@ -356,6 +355,7 @@ int ***niveau17() {
     tableau[2][3][0] = 5;
     tableau[3][0][0] = 4;
     tableau[3][1][0] = 4;
+    return tableau;
 }
 
 //niveau 18
