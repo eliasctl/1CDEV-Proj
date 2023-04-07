@@ -132,6 +132,20 @@ int ***choixDuNiveau(int *abscisses , int *ordonnees , int ***tableau , int *cho
             *choixNiveauCorrect = 1;
             return tableau;
             break;
+        case 16:
+            tableau = niveau16();
+            *abscisses = 6;
+            *ordonnees = 6;
+            *choixNiveauCorrect = 1;
+            return tableau;
+            break;
+        case 17:
+            tableau = niveau17();
+            *abscisses = 4;
+            *ordonnees = 4;
+            *choixNiveauCorrect = 1;
+            return tableau;
+            break;
         default:
             printf("Choix invalide \n");
             *choixNiveauCorrect = 0;
@@ -189,6 +203,7 @@ void affichage(int ***tableau , int abscisses , int ordonnees) {
                     }
                     break;
             }
+            printf(" ");
         }
         printf("\n");
     }

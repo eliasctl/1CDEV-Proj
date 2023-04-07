@@ -304,3 +304,63 @@ int ***niveau15() {
     tableau[4][3][0] = 4;
     return tableau;
 }
+
+
+int ***niveau16() {
+    int ***tableau = creerTableau(6, 6);
+    // Case de départ
+    tableau[0][4][0] = 0;
+    tableau[0][4][1] = 1;
+    tableau[0][4][2] = 1;
+    tableau[0][4][3] = 1;
+    // Cases Vides
+    tableau[0][0][0] = -1;
+    tableau[0][1][0] = -1;
+    tableau[0][2][0] = -1;
+    tableau[0][3][0] = -1;
+    tableau[0][5][0] = -1;
+    tableau[1][5][0] = -1;
+    tableau[3][2][0] = -1;
+    tableau[3][3][0] = -1;
+    tableau[3][4][0] = -1;
+    tableau[3][5][0] = -1;
+    tableau[4][5][0] = -1;
+    tableau[5][5][0] = -1;
+    // Case Valeur
+    tableau[2][4][0] = 8;
+    tableau[2][5][0] = 9;
+    return tableau;
+}
+
+int ***niveau17() {
+    int ***tableau = creerTableau(4, 4);
+    // Case de départ
+    tableau[2][1][0] = 0;
+    tableau[2][1][1] = 1;
+    tableau[2][1][2] = 1;
+    tableau[2][1][3] = 1;
+    // Cases Vides
+    tableau[0][0][0] = -1;
+    tableau[3][2][0] = -1;
+    tableau[3][3][0] = -1;
+    // Case Valeur
+    tableau[0][1][0] = 9;
+    tableau[0][2][0] = 8;
+    tableau[0][3][0] = 7;
+    tableau[1][0][0] = 4;
+    tableau[1][1][0] = 4;
+    tableau[1][2][0] = 4;
+    tableau[1][3][0] = 6;
+    tableau[2][0][0] = 4;
+    tableau[2][2][0] = 4;
+    tableau[2][3][0] = 5;
+    tableau[3][0][0] = 4;
+    tableau[3][1][0] = 4;
+}
+
+//niveau 18
+// 222
+// 222
+//X129
+// 228
+// 227
