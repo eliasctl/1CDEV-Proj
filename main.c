@@ -151,6 +151,97 @@ int ***choixDuNiveau(int *abscisses , int *ordonnees , int ***tableau , int *cho
             *choixNiveauCorrect = 1;
             return tableau;
             break;
+        case 18:
+            tableau = niveau18();
+            *abscisses = 5;
+            *ordonnees = 4;
+            *choixNiveauCorrect = 1;
+            return tableau;
+            break;
+        case 19:
+            tableau = niveau19();
+            *abscisses = 5;
+            *ordonnees = 5;
+            *choixNiveauCorrect = 1;
+            return tableau;
+            break;
+        case 20:
+            tableau = niveau20();
+            *abscisses = 3;
+            *ordonnees = 3;
+            *choixNiveauCorrect = 1;
+            return tableau;
+            break;
+        case 21:
+            tableau = niveau21();
+            *abscisses = 3;
+            *ordonnees = 3;
+            *choixNiveauCorrect = 1;
+            return tableau;
+            break;
+        case 22:
+            tableau = niveau22();
+            *abscisses = 4;
+            *ordonnees = 3;
+            *choixNiveauCorrect = 1;
+            return tableau;
+            break;
+        case 23:
+            tableau = niveau23();
+            *abscisses = 4;
+            *ordonnees = 4;
+            *choixNiveauCorrect = 1;
+            return tableau;
+            break;
+        case 24:
+            tableau = niveau24();
+            *abscisses = 3;
+            *ordonnees = 3;
+            *choixNiveauCorrect = 1;
+            return tableau;
+            break;
+        case 25:
+            tableau = niveau25();
+            *abscisses = 3;
+            *ordonnees = 4;
+            *choixNiveauCorrect = 1;
+            return tableau;
+            break;
+        case 26:
+            tableau = niveau26();
+            *abscisses = 5;
+            *ordonnees = 4;
+            *choixNiveauCorrect = 1;
+            return tableau;
+            break;
+        case 27:
+            tableau = niveau27();
+            *abscisses = 3;
+            *ordonnees = 3;
+            *choixNiveauCorrect = 1;
+            return tableau;
+            break;
+        case 28:
+            tableau = niveau28();
+            *abscisses = 4;
+            *ordonnees = 5;
+            *choixNiveauCorrect = 1;
+            return tableau;
+            break;
+        case 29:
+            tableau = niveau29();
+            *abscisses = 4;
+            *ordonnees = 4;
+            *choixNiveauCorrect = 1;
+            return tableau;
+            break;
+        case 30:
+            tableau = niveau30();
+            *abscisses = 6;
+            *ordonnees = 6;
+            *choixNiveauCorrect = 1;
+            return tableau;
+            break;
         default:
             printf("Choix invalide \n");
             *choixNiveauCorrect = 0;
@@ -350,7 +441,8 @@ void queFaire(int ***tableau , int abscisses , int ordonnees , int *partieFinie 
     printf("Pour sélectionner une direction (Z, Q, S, D) \n");
     printf("Pour annuler le dernier coup (A) \n");
     printf("Pour effecer la chaine (E) \n");
-    printf("Pour sélectionner une autre couleur (B, R, V, O) \n");
+    printf("Pour changer de couleur (C) \n");
+    printf("Pour recommencer le niveau (R) \n");
     printf("Pour quitter (P) \n");
     int choixValide = 0;
     while (choixValide == 0)
@@ -450,46 +542,31 @@ void queFaire(int ***tableau , int abscisses , int ordonnees , int *partieFinie 
                     }
                 }
                 break;
-            case 'B':
-                printf("Vous avez choisi de changer de couleur pour bleu \n");
-                if (couleurEstPresente(tableau, abscisses, ordonnees, 1) != 1){
-                    printf("La couleur n'est pas présente \n");
-                    choixValide =0;
-                } else {
-                    tableau[positionActuelle[0]][positionActuelle[1]][1] = 0;
-                    dernierePositionCouleur(tableau, abscisses, ordonnees, 1);
+            case 'C':
+                printf("Vous avez choisi de changer de couleur \n");
+                int couleur = tableau[positionActuelle[0]][positionActuelle[1]][2];
+                int antiBoucle = 0;
+                int couleurTrouvee = 0;
+                while (antiBoucle <4 && couleurTrouvee==0)
+                {
+                    antiBoucle++;
+                    couleur++;
+                    if (couleur == 5){
+                        couleur = 1;
+                    }
+                    couleurTrouvee = couleurEstPresente(tableau, abscisses, ordonnees, couleur);
                 }
-
+                if (couleurTrouvee == 1 && antiBoucle < 4){
+                    tableau[positionActuelle[0]][positionActuelle[1]][1] = 0;
+                    dernierePositionCouleur(tableau, abscisses, ordonnees, couleur);
+                } else {
+                    printf("Vous ne pouvez pas changer de couleur \n");
+                    choixValide = 0;
+                }
                 break;
             case 'R':
-                printf("Vous avez choisi de changer de couleur pour rouge \n");
-                if (couleurEstPresente(tableau, abscisses, ordonnees, 2) != 1){
-                    printf("La couleur rouge n'est pas présente \n");
-                    choixValide = 0;
-                } else {
-                    tableau[positionActuelle[0]][positionActuelle[1]][1] = 0;
-                    dernierePositionCouleur(tableau, abscisses, ordonnees, 2);
-                }
-                break;
-            case 'V':
-                printf("Vous avez choisi de changer de couleur pour vert \n");
-                if (couleurEstPresente(tableau, abscisses, ordonnees, 3) != 1){
-                    printf("La couleur verte n'est pas présente \n");
-                    choixValide = 0;
-                } else {
-                    tableau[positionActuelle[0]][positionActuelle[1]][1] = 0;
-                    dernierePositionCouleur(tableau, abscisses, ordonnees, 3);
-                }
-                break;
-            case 'O':
-                printf("Vous avez choisi de changer de couleur pour orange \n");
-                if (couleurEstPresente(tableau, abscisses, ordonnees, 4) != 1){
-                    printf("La couleur orange n'est pas présente \n");
-                    choixValide = 0;
-                } else {
-                    tableau[positionActuelle[0]][positionActuelle[1]][1] = 0;
-                    dernierePositionCouleur(tableau, abscisses, ordonnees, 4);
-                }
+                printf("Vous avez choisi de recommencer le niveau \n");
+                *partieFinie = 3;
                 break;
             case 'P':
                 printf("Vous avez choisi de quitter le niveau \n");
@@ -580,7 +657,7 @@ int main() {
     int ordonnees;
     int niveau = -1;
     int choixNiveauCorrect = 0;
-    int partieFinie = 0; // partie fini  0=non 1=gagnée 2=quité
+    int partieFinie = 0; // partie fini  0=non 1=gagnée 2=quité 3=recommencé
     int jeuFini = 0; // jeu fini 0=non 1=oui
     int valeurChoixApresPartie = 0;
     while (choixNiveauCorrect == 0){
@@ -625,7 +702,7 @@ int main() {
                 jeuFini = 1;
                 break;
             }
-        } else {
+        } else if (partieFinie == 2){
             printf("Vous avez quité le niveau %d\n", niveau);
             effacerTableau(tableau, abscisses, ordonnees);
             valeurChoixApresPartie =  choixApresPartie();
@@ -646,6 +723,10 @@ int main() {
                 jeuFini = 1;
                 break;
             }
+        } else if (partieFinie == 3){
+            printf("Vous avez recommencé le niveau %d\n", niveau);
+            effacerTableau(tableau, abscisses, ordonnees);
+            tableau = choixDuNiveau(&abscisses , &ordonnees , tableau , &choixNiveauCorrect, &niveau);
         }
         partieFinie = 0;
     }
