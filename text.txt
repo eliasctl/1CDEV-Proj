@@ -1,5 +1,0 @@
-calculer le PGDC et les coeficients de Bézout des entiers 712 et 114
-
-Plus Grand Diviseur Commun (PGDC) de 712 et 114:
-
-PGDC(712,114) = 2

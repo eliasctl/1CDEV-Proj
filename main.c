@@ -594,12 +594,14 @@ void explicationDuJeu(){
     printf("Appuyez sur [entrer] pour continuer ! \n");
 }
 
-int choixApresPartie(){
+int choixApresPartie(int niveau){
     int choix;
     int choixValide = 0;
     while (choixValide == 0){
         printf("Voulez vous recommencer le niveau ? (1) \n");
-        printf("Voulez-vous aller au niveau suivant ? (2) \n");
+        if (niveau < 30){
+            printf("Voulez vous aller au niveau suivant ? (2) \n");
+        }
         printf("Voulez-vous choisir un autre niveau ? (3) \n");
         printf("Voulez-vous quittez le jeu ? (4) \n");
         scanf("%d", &choix);
@@ -610,8 +612,13 @@ int choixApresPartie(){
                 choixValide = 1;
                 break;
             case 2:
-                printf("Vous avez choisi d'aller au niveau suivant \n");
-                choixValide = 1;
+                if (niveau < 30){
+                    printf("Vous avez choisi d'aller au niveau suivant \n");
+                    choixValide = 1;
+                } else {
+                    printf("Choix invalide \n");
+                    choixValide = 0;
+                }
                 break;
             case 3:
                 printf("Vous avez choisi de choisir un autre niveau \n");
@@ -660,15 +667,18 @@ int main() {
     int partieFinie = 0; // partie fini  0=non 1=gagnée 2=quité 3=recommencé
     int jeuFini = 0; // jeu fini 0=non 1=oui
     int valeurChoixApresPartie = 0;
-    while (choixNiveauCorrect == 0){
-        explicationDuJeu();
-        getchar();
-        system("clear");
-        tableau = choixDuNiveau(&abscisses , &ordonnees , tableau , &choixNiveauCorrect, &niveau);
-    }
+    explicationDuJeu();
+    getchar();
+    system("clear");
 
     while (jeuFini == 0)
     {
+        if (niveau == -1){
+            while (choixNiveauCorrect == 0){
+                tableau = choixDuNiveau(&abscisses , &ordonnees , tableau , &choixNiveauCorrect, &niveau);
+            }
+        }
+
         while (partieFinie == 0){
             system("clear");
             affichage(tableau, abscisses, ordonnees);
@@ -683,8 +693,11 @@ int main() {
         if (partieFinie == 1){
             affichage(tableau, abscisses, ordonnees);
             printf("Bravo vous avez gagné au niveau %d 🎉\n", niveau);
+            if (niveau == 30){
+                printf("Vous avez fini le jeu 🎉🎉🎉\n");
+            }
             effacerTableau(tableau, abscisses, ordonnees);
-            valeurChoixApresPartie =  choixApresPartie();
+            valeurChoixApresPartie =  choixApresPartie(niveau);
             switch (valeurChoixApresPartie)
             {
             case 1:
@@ -705,7 +718,7 @@ int main() {
         } else if (partieFinie == 2){
             printf("Vous avez quité le niveau %d\n", niveau);
             effacerTableau(tableau, abscisses, ordonnees);
-            valeurChoixApresPartie =  choixApresPartie();
+            valeurChoixApresPartie =  choixApresPartie(niveau);
             switch (valeurChoixApresPartie)
             {
             case 1:
@@ -732,5 +745,3 @@ int main() {
     }
     return 0;
 }
-
-// max booblil | prète moi ta meuf
